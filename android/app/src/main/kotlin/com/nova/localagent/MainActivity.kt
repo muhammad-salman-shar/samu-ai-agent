@@ -24,7 +24,10 @@ class MainActivity : FlutterActivity() {
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
 
-        methodChannel = MethodChannel(this, CHANNEL).apply {
+        methodChannel = MethodChannel(
+    flutterEngine.dartExecutor.binaryMessenger,
+    CHANNEL
+).apply {
             setMethodCallHandler { call, result ->
                 when (call.method) {
                     "checkAccessibilityPermission" -> {
