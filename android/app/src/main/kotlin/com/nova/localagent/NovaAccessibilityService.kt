@@ -9,8 +9,8 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
-import androidx.annotation.MainThread
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -45,11 +45,15 @@ class NovaAccessibilityService : AccessibilityService() {
         return super.onUnbind(intent)
     }
 
+    override fun onAccessibilityEvent(event: AccessibilityEvent?) {
+        // Intentionally empty - we use rootInActiveWindow for on-demand queries
+        // rather than processing every accessibility event for performance
+    }
+
     /**
      * Recursively traverses the active window and extracts actionable nodes.
      * Returns a sanitized JSON array of screen nodes.
      */
-    @MainThread
     fun getScreenNodes(): String {
         val rootNode = rootInActiveWindow ?: return JSONArray().toString()
         
@@ -134,7 +138,6 @@ class NovaAccessibilityService : AccessibilityService() {
     /**
      * Perform a tap gesture at the specified coordinates.
      */
-    @MainThread
     fun tap(x: Int, y: Int, callback: ((Boolean) -> Unit)? = null) {
         Log.d(TAG, "Tap at ($x, $y)")
         
@@ -164,7 +167,6 @@ class NovaAccessibilityService : AccessibilityService() {
     /**
      * Perform a swipe gesture from start to end coordinates.
      */
-    @MainThread
     fun swipe(startX: Int, startY: Int, endX: Int, endY: Int, duration: Int = 300, callback: ((Boolean) -> Unit)? = null) {
         Log.d(TAG, "Swipe from ($startX, $startY) to ($endX, $endY)")
         
@@ -192,7 +194,6 @@ class NovaAccessibilityService : AccessibilityService() {
     /**
      * Set text on an editable node.
      */
-    @MainThread
     fun setText(nodeId: Int, text: String, callback: ((Boolean) -> Unit)? = null) {
         Log.d(TAG, "Setting text on node $nodeId")
         
@@ -222,7 +223,6 @@ class NovaAccessibilityService : AccessibilityService() {
     /**
      * Click on a node by its internal ID.
      */
-    @MainThread
     fun clickNode(nodeId: Int, callback: ((Boolean) -> Unit)? = null) {
         Log.d(TAG, "Clicking node $nodeId")
         
@@ -302,14 +302,7 @@ class NovaAccessibilityService : AccessibilityService() {
     /**
      * Perform global system actions.
      */
-    @MainThread
-    fun performGlobalAction(action: Int): Boolean {
-        return performGlobalActionCompat(action)
-    }
-
     fun goBack(): Boolean = performGlobalAction(AccessibilityService.GLOBAL_ACTION_BACK)
     fun goHome(): Boolean = performGlobalAction(AccessibilityService.GLOBAL_ACTION_HOME)
     fun openRecents(): Boolean = performGlobalAction(AccessibilityService.GLOBAL_ACTION_RECENTS)
-    fun lockScreen(): Boolean = performGlobalActionCompat(AccessibilityService.GLOBAL_ACTION_LOCK_SCREEN)
-    fun takeScreenshot(): Boolean = performGlobalActionCompat(AccessibilityService.GLOBAL_ACTION_TAKE_SCREENSHOT)
 }

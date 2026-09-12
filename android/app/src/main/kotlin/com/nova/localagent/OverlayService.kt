@@ -33,6 +33,16 @@ class OverlayService : Service() {
             private set
         
         var emergencyStopCallback: (() -> Unit)? = null
+        
+        fun getStartIntent(context: Context): Intent {
+            return Intent(context, OverlayService::class.java)
+        }
+        
+        fun getStopIntent(context: Context): Intent {
+            return Intent(context, OverlayService::class.java).apply {
+                action = "STOP_OVERLAY"
+            }
+        }
     }
 
     private lateinit var windowManager: WindowManager
@@ -206,18 +216,6 @@ class OverlayService : Service() {
                 // View might already be removed
             }
             isViewAdded = false
-        }
-    }
-
-    companion object {
-        fun getStartIntent(context: Context): Intent {
-            return Intent(context, OverlayService::class.java)
-        }
-        
-        fun getStopIntent(context: Context): Intent {
-            return Intent(context, OverlayService::class.java).apply {
-                action = "STOP_OVERLAY"
-            }
         }
     }
 }

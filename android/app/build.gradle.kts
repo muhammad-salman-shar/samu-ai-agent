@@ -37,5 +37,12 @@ flutter {
 }
 
 dependencies {
-    // AccessibilityService aur WindowManager standard Android framework APIs hain
+    // Flutter embedding provides FlutterActivity, FlutterEngine, MethodChannel
+    // AccessibilityService and WindowManager are standard Android framework APIs
+    
+    // AndroidX annotations for @OptIn, @MainThread, etc.
+    implementation("androidx.annotation:annotation:1.7.1")
+    
+    // Core KTX for additional AndroidX utilities
+    implementation("androidx.core:core-ktx:1.12.0")
 }
