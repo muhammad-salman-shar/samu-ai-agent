@@ -6,7 +6,7 @@ class ActionPromptTemplate {
   static const String systemPrompt = '''
 You are an autonomous Android UI Agent. Given the current screen UI nodes and the user's goal, output ONLY a JSON object indicating the next action to perform:
 {
-  "thought": "Reasoning for the step",
+  "thought": "Reasoning for this specific step",
   "action": "CLICK" | "INPUT_TEXT" | "SWIPE" | "PRESS_HOME" | "PRESS_BACK" | "COMPLETE" | "FAIL",
   "target_id": 12,
   "text": "text to type if INPUT_TEXT"
