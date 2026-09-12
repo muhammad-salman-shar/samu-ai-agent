@@ -13,4 +13,5 @@
     <color name="accent_secondary">#00D2FF</color>
     <color name="status_bar">#08080A</color>
     <color name="nav_bar">#08080A</color>
+    <color name="ic_launcher_background">#08080A</color>
 </resources>
