@@ -1,46 +1,30 @@
 ```
-# Build artifacts
-build/
-dist/
-target/
-
-# Dependencies
+# Gradle
 .gradle/
-node_modules/
-venv/
-.venv/
-__pycache__/
-*.egg-info/
+build/
 
-# Logs and temp files
+# Android
+*.apk
+*.aar
+*.so
+*.dex
+
+# IDE
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+
+# Logs
 *.log
-*.tmp
-*.swp
 
 # Environment
 .env
 .env.local
 *.env.*
 
-# Editors
-.vscode/
-.idea/
-*.iml
-*.iws
-
-# OS generated files
-.DS_Store
-Thumbs.db
-
-# Compiled files
-*.class
-*.o
-*.obj
-*.exe
-*.dll
-*.so
-*.a
-*.out
-*.pyc
-*.pyo
+# Dependencies
+node_modules/
+vendor/bundle
 ```
