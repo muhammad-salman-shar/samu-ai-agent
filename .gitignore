@@ -1,20 +1,30 @@
 ```
-# Build artifacts
-build/
-.gradle/
+# Android build outputs
 *.apk
-*.aab
 *.aar
+*.so
+*.dex
 
-# Android specific
+# Android cache and temp files
+.gradle/
 local.properties
-captures/
-.externalNativeBuild/
+.proguard/
 
-# Dependencies
-node_modules/
-vendor/bundle/
-.PATH
-.GEM
-.rubocop.yml
+# Android Studio
+.idea/
+*.iml
+*.iws
+out/
+
+# Generated files
+gen/
+bin/
+obj/
+
+# Log files
+*.log
+
+# Temp files
+*.tmp
+*.temp
 ```
