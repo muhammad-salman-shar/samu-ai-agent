@@ -1,49 +1,20 @@
 ```
-# Android build artifacts
-*.apk
-*.aar
-*.dex
-*.so
-
-# Android build directories
+# Build artifacts
 build/
 .gradle/
-*/build/
-*/.gradle/
+*.apk
+*.aab
+*.aar
 
-# APK and Intellij
-*.iml
-*.ipr
-*.iws
-.idea/
-
-# Generated files
-gen/
-out/
-
-# Local configuration file (sdk path, etc)
+# Android specific
 local.properties
+captures/
+.externalNativeBuild/
 
-# Log Files
-*.log
-
-# OS generated files
-.DS_Store
-Thumbs.db
-
-# Android Studio Navigation editor temp files
-.navigation/
-
-# Android Coverage
-*.ec
-
-# Firebase test lab logs
-firebase-testlab.log*
-
-# External Native Build folder
-.externalNativeBuild
-
-# NDK
-obj/
-.libs/
+# Dependencies
+node_modules/
+vendor/bundle/
+.PATH
+.GEM
+.rubocop.yml
 ```
