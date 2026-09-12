@@ -2,27 +2,6 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../../models/models.dart';
 
-class ActionPromptTemplate {
-  static const String systemPrompt = '''
-You are an autonomous Android UI Agent. Given the current screen UI nodes and the user's goal, output ONLY a JSON object indicating the next action to perform:
-{
-  "thought": "Reasoning for this specific step",
-  "action": "CLICK" | "INPUT_TEXT" | "SWIPE" | "PRESS_HOME" | "PRESS_BACK" | "COMPLETE" | "FAIL",
-  "target_id": 12,
-  "text": "text to type if INPUT_TEXT"
-}
-''';
-
-  static String buildUserPrompt(String goal, String screenHierarchy) {
-    return '''
-Goal: $goal
-
-Screen Hierarchy:
-$screenHierarchy
-''';
-  }
-}
-
 class LocalAIService {
   EngineConfig _config;
 
@@ -30,6 +9,7 @@ class LocalAIService {
       : _config = config ??
             const EngineConfig(
               type: EngineType.localStudio,
+              name: 'Local Studio',
               baseUrl: 'http://192.168.1.100:8080/v1',
               model: 'default',
             );
@@ -40,21 +20,35 @@ class LocalAIService {
     _config = newConfig;
   }
 
+  /// Generate an action based on the user's goal and current screen state.
+  /// 
+  /// Parameters:
+  /// - [goal]: The user's high-level task/goal
+  /// - [screenHierarchy]: String representation of the current screen UI nodes
+  /// - [previousAction]: Optional previous action type name
+  /// - [previousResult]: Optional result message from the previous action
   Future<AgentAction?> generateAction({
     required String goal,
     required String screenHierarchy,
+    String? previousAction,
+    String? previousResult,
   }) async {
     try {
       final messages = <Map<String, dynamic>>[
         {'role': 'system', 'content': ActionPromptTemplate.systemPrompt},
         {
           'role': 'user',
-          'content': ActionPromptTemplate.buildUserPrompt(goal, screenHierarchy)
+          'content': ActionPromptTemplate.buildUserPrompt(
+            userGoal: goal,
+            screenNodes: [screenHierarchy],
+            previousAction: previousAction,
+            previousResult: previousResult,
+          )
         },
       ];
 
       final response = await http.post(
-        Uri.parse('${_config.baseUrl}/chat/completions'),
+        Uri.parse('${_config.chatEndpoint}'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode(_buildRequestBody(messages)),
       ).timeout(const Duration(seconds: 15));
@@ -69,6 +63,13 @@ class LocalAIService {
       return null;
     }
     return null;
+  }
+
+  /// Cleanup any resources held by this service.
+  /// Currently no persistent resources require cleanup, but this method
+  /// is provided for lifecycle management compatibility.
+  void dispose() {
+    // No-op: No HTTP client, streams, or other resources require cleanup
   }
 
   Map<String, dynamic> _buildRequestBody(List<Map<String, dynamic>> messages) {
