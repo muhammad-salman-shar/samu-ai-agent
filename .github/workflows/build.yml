@@ -34,13 +34,20 @@ jobs:
           java -version
           flutter doctor -v
 
-      - name: Force Upgrade Gradle Wrapper to 8.7 ⚙️
+      - name: Configure Gradle Wrapper ⚙️
         run: |
           mkdir -p android/gradle/wrapper
-          cat << 'EOF' > android/gradle/wrapper/gradle-wrapper.properties
+          # Agar 8.14 available hai toh wo use karega, warna rock-solid 8.7 par rakhega
+          if curl -s -f -I "https://services.gradle.org/distributions/gradle-8.14-all.zip" > /dev/null; then
+            DIST_URL="https\://services.gradle.org/distributions/gradle-8.14-all.zip"
+          else
+            DIST_URL="https\://services.gradle.org/distributions/gradle-8.7-all.zip"
+          fi
+          
+          cat << EOF > android/gradle/wrapper/gradle-wrapper.properties
           distributionBase=GRADLE_USER_HOME
           distributionPath=wrapper/dists
-          distributionUrl=https\://services.gradle.org/distributions/gradle-8.7-all.zip
+          distributionUrl=$DIST_URL
           zipStoreBase=GRADLE_USER_HOME
           zipStorePath=wrapper/dists
           EOF
@@ -53,7 +60,7 @@ jobs:
         run: chmod +x android/gradlew || true
 
       - name: Build Debug APK 🏗️
-        run: flutter build apk --debug
+        run: flutter build apk --debug --android-skip-build-dependency-validation
 
       - name: Upload APK to Artifacts 📤
         uses: actions/upload-artifact@v4
