@@ -11,16 +11,16 @@ jobs:
   build-apk:
     name: Build Android Debug APK
     runs-on: ubuntu-latest
-
+    
     steps:
       - name: Checkout Source Code 🛎️
         uses: actions/checkout@v4
 
-      - name: Set up Java 21 (Temurin) ☕
+      - name: Set up Java 17 (Temurin) ☕
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
-          java-version: '21'
+          java-version: '17'
           cache: 'gradle'
 
       - name: Set up Flutter Stable 🚀
@@ -36,12 +36,6 @@ jobs:
 
       - name: Install Flutter Dependencies 📦
         run: flutter pub get
-
-      - name: Align Gradle Wrapper for Java 21 Compatibility ⚙️
-        run: |
-          sed -i 's/gradle-.*-all.zip/gradle-8.7-all.zip/' android/gradle/wrapper/gradle-wrapper.properties || true
-          sed -i 's/gradle-.*-bin.zip/gradle-8.7-all.zip/' android/gradle/wrapper/gradle-wrapper.properties || true
-          cat android/gradle/wrapper/gradle-wrapper.properties
 
       - name: Grant Gradlew Execution Permissions 🔑
         run: chmod +x android/gradlew
