@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
 import org.json.JSONArray
 import org.json.JSONObject
@@ -42,6 +43,11 @@ class NovaAccessibilityService : AccessibilityService() {
         instance = null
         Log.i(TAG, "Accessibility Service Disconnected")
         return super.onUnbind(intent)
+    }
+
+    override fun onAccessibilityEvent(event: AccessibilityEvent?) {
+        // Intentionally empty - we use rootInActiveWindow for on-demand queries
+        // rather than processing every accessibility event for performance
     }
 
     /**
