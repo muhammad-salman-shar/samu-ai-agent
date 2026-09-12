@@ -27,32 +27,15 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-          cache: false
+          cache: true
 
       - name: Print Tooling Versions 📋
         run: |
           java -version
           flutter doctor -v
 
-      - name: Patch Legacy Android Configuration 🛠️
-        run: |
-          # 1. AndroidManifest.xml ke andar explicit application name configure karna
-          sed -i 's/android:name="io.flutter.app.FlutterApplication"/android:name="${applicationName}"/g' android/app/src/main/AndroidManifest.xml || true
-          
-          # 2. Agar v1 embedding meta-data tag maujood hai toh use force v2 par override karna
-          sed -i 's/android:value="1"/android:value="2"/g' android/app/src/main/AndroidManifest.xml || true
-          
-          # 3. Check karna ke kya embedding tag manifest mein exists karta hai, agar nahi toh inject karna
-          if ! grep -q "flutterEmbedding" android/app/src/main/AndroidManifest.xml; then
-            sed -i '/<application/a \        <meta-data android:name="flutterEmbedding" android:value="2" \/>' android/app/src/main/AndroidManifest.xml || true
-          fi
-          
-          echo "=== Patched AndroidManifest.xml ==="
-          cat android/app/src/main/AndroidManifest.xml
-
       - name: Install Flutter Dependencies 📦
-        run: |
-          flutter pub get
+        run: flutter pub get
 
       - name: Build Debug APK 🏗️
         run: flutter build apk --debug
