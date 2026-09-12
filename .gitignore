@@ -1,46 +1,76 @@
 ```
-# Flutter/Dart
-.dart_tool/
-.packages
-.pub-cache/
-pubspec.lock
-
-# Build
+# Compiled and build artifacts
+*.pyc
+__pycache__/
+*.o
+*.obj
+dist/
 build/
-**/ios/.generated/
-**/android/.generated/
+*.class
+*.exe
+*.dll
+*.so
+*.a
+*.out
 
-# Android
-android/.gradle
-android/build/
-android/app/build/
-*.keystore
-*.jks
+# Dependencies
+.venv/
+venv/
+node_modules/
+target/
+.gradle/
+.mypy_cache/
+.pytest_cache/
+.julia/
+zig*/
+julia-*/
 
-# iOS
-ios/Pods/
-ios/build/
-*.mobileprovision
-
-# Logs
+# Logs and temp files
 *.log
-**/logs
+*.tmp
+*.swp
+*.swo
+*.tmp
 
 # Environment
 .env
 .env.local
 .env.*
-!env.example
 
-# Dependencies
-node_modules/
-vendor/
-
-# IDE
+# Editors
 .vscode/
 .idea/
-*.swp
-*.swo
-*~
-```.next/
-dist/
+
+# Coverage
+coverage/
+htmlcov/
+.coverage
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Compressed files
+*.zip
+*.gz
+*.tar
+*.tgz
+*.bz2
+*.xz
+*.7z
+*.rar
+*.zst
+*.lz4
+*.lzh
+*.cab
+*.arj
+*.rpm
+*.deb
+*.Z
+*.lz
+*.lzo
+*.tar.gz
+*.tar.bz2
+*.tar.xz
+*.tar.zst
+```

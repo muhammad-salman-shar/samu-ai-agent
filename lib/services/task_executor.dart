@@ -129,8 +129,8 @@ class TaskExecutor {
 
         // Phase 2: Reasoning - Ask AI for next action
         final action = await _aiService.generateAction(
-          userGoal: _currentGoal,
-          screenNodes: screenNodes.map((n) => n.toPromptString()).toList(),
+          goal: _currentGoal,
+          screenHierarchy: screenNodes.map((n) => n.toPromptString()).join('\n'),
           previousAction: _lastAction?.type.name,
           previousResult: _lastResult?.message,
         );
