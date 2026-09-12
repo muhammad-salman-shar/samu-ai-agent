@@ -31,7 +31,7 @@ class LocalAIService {
             const EngineConfig(
               type: EngineType.localStudio,
               baseUrl: 'http://192.168.1.100:8080/v1',
-              modelName: 'default',
+              model: 'default',
             );
 
   EngineConfig get currentConfig => _config;
@@ -76,13 +76,13 @@ class LocalAIService {
       case EngineType.localStudio:
       case EngineType.cloud:
         return {
-          'model': _config.modelName,
+          'model': _config.model,
           'messages': messages,
           'temperature': 0.2,
         };
       case EngineType.ollama:
         return {
-          'model': _config.modelName,
+          'model': _config.model,
           'prompt': messages.isNotEmpty ? messages.last['content'] : '',
           'stream': false,
         };
