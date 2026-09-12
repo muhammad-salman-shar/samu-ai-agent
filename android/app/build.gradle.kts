@@ -38,4 +38,7 @@ flutter {
 
 dependencies {
     // AccessibilityService aur WindowManager standard Android framework APIs hain
+    
+    // Material Components for Theme.MaterialComponents.DayNight.NoActionBar
+    implementation("com.google.android.material:material:1.11.0")
 }
