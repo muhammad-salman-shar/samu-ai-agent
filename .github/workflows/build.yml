@@ -27,15 +27,18 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-          cache: true
+          cache: false # Purane v1 configuration cache ko bypass karne ke liye
 
       - name: Print Tooling Versions 📋
         run: |
           java -version
           flutter doctor -v
 
-      - name: Install Flutter Dependencies 📦
-        run: flutter pub get
+      - name: Clean & Recreate Android Platform 🧹
+        run: |
+          flutter clean
+          flutter create . --platforms=android
+          flutter pub get
 
       - name: Build Debug APK 🏗️
         run: flutter build apk --debug
