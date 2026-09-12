@@ -13,56 +13,35 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Source Code 🛎️
+      - name: Checkout Source Code
         uses: actions/checkout@v4
 
-      - name: Set up Java 21 (Temurin) ☕
+      - name: Set up Java 17
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
-          java-version: '21'
-          cache: 'gradle'
+          java-version: '17'
 
-      - name: Set up Flutter Stable 🚀
+      - name: Set up Flutter Stable
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-          cache: true
+          cache: false
 
-      - name: Print Tooling Versions 📋
+      - name: Clean Previous Build Artifacts and Gradle Cache
         run: |
-          java -version
-          flutter doctor -v
+          flutter clean
+          rm -rf android/.gradle
+          rm -rf \~/.gradle/caches
+          flutter pub get
 
-      - name: Configure Gradle Wrapper ⚙️
-        run: |
-          mkdir -p android/gradle/wrapper
-          # Agar 8.14 available hai toh wo use karega, warna rock-solid 8.7 par rakhega
-          if curl -s -f -I "https://services.gradle.org/distributions/gradle-8.14-all.zip" > /dev/null; then
-            DIST_URL="https\://services.gradle.org/distributions/gradle-8.14-all.zip"
-          else
-            DIST_URL="https\://services.gradle.org/distributions/gradle-8.7-all.zip"
-          fi
-          
-          cat << EOF > android/gradle/wrapper/gradle-wrapper.properties
-          distributionBase=GRADLE_USER_HOME
-          distributionPath=wrapper/dists
-          distributionUrl=$DIST_URL
-          zipStoreBase=GRADLE_USER_HOME
-          zipStorePath=wrapper/dists
-          EOF
-          cat android/gradle/wrapper/gradle-wrapper.properties
-
-      - name: Install Flutter Dependencies 📦
-        run: flutter pub get
-
-      - name: Grant Gradlew Execution Permissions 🔑
+      - name: Grant Gradlew Permissions
         run: chmod +x android/gradlew || true
 
-      - name: Build Debug APK 🏗️
+      - name: Build Debug APK
         run: flutter build apk --debug --android-skip-build-dependency-validation
 
-      - name: Upload APK to Artifacts 📤
+      - name: Upload APK to Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: NovaAgent-Local-Debug
