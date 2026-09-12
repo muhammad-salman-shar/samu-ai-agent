@@ -1,40 +1,4 @@
 ```
-# Build artifacts
-build/
-*.apk
-*.aar
-*.jar
-*.class
-
-# Gradle
 .gradle/
-!gradle/wrapper/gradle-wrapper.jar
-
-# Local configuration file (sdk path, etc)
 local.properties
-
-# Log Files
-*.log
-
-# Android Studio Navigation editor temp files
-.navigation/
-
-# Android Studio captures folder
-captures/
-
-# IntelliJ IDEA artifacts
-*.iml
-*.ipr
-*.iws
-.idea/
-
-# Environment
-.env
-.env.local
-.env.*
-
-# Temporary files
-*.tmp
-*.swp
-*~
 ```
