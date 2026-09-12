@@ -43,7 +43,7 @@ class AgentAction {
   });
 
   factory AgentAction.fromJson(Map<String, dynamic> json) {
-    final actionStr = (json['action'] as String).toUpperCase();
+    final actionStr = (json['action'] as String? ?? 'CLICK').toUpperCase();
     
     ActionType type;
     switch (actionStr) {
@@ -139,11 +139,11 @@ class ActionResult {
   final String message;
   final DateTime timestamp;
 
-  const ActionResult({
+  ActionResult({
     required this.success,
     required this.message,
-    this.timestamp = const DateTime.now(),
-  });
+    DateTime? timestamp,
+  }) : timestamp = timestamp ?? DateTime.now();
 
   factory ActionResult.success(String message) {
     return ActionResult(success: true, message: message);
