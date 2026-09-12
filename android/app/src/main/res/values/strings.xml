@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">NovaAgent Local</string>
+    <string name="accessibility_service_description">NovaAgent Accessibility Service enables autonomous AI control of your device. It reads screen content and performs gestures to complete tasks. Only enable when you trust the agent.</string>
+    <string name="overlay_permission_required">Overlay permission is required for the floating control pill.</string>
+    <string name="accessibility_permission_required">Accessibility permission is required for NovaAgent to function.</string>
+</resources>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Theme.NovaAgent" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:statusBarColor">@color/status_bar</item>
+        <item name="android:navigationBarColor">@color/nav_bar</item>
+        <item name="android:windowBackground">@color/background</item>
+    </style>
+
+    <color name="background">#08080A</color>
+    <color name="surface">#131318</color>
+    <color name="stroke">#22222C</color>
+    <color name="accent">#00F5A0</color>
+    <color name="accent_secondary">#00D2FF</color>
+    <color name="status_bar">#08080A</color>
+    <color name="nav_bar">#08080A</color>
+</resources>
